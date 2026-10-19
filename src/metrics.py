@@ -55,6 +55,7 @@ def plot_asymptotics(csv_filename, output_name):
     plt.grid(axis='y', linestyle='--', alpha=0.6)
     plt.tight_layout()
     
+
     FIG_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     output_file = FIG_RESULTS_DIR / f"{output_name}.pdf"
     plt.savefig(output_file, format='pdf', bbox_inches='tight')
