@@ -4,28 +4,40 @@ import seaborn as sns
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = PROJECT_ROOT / "data" / "simulated"
+DATA_DIR = PROJECT_ROOT / "data" 
+RESULTS_DIR = PROJECT_ROOT / "results"
+RAW_RESULTS_DIR = RESULTS_DIR / "raw"
+FIG_RESULTS_DIR = RESULTS_DIR / "figures"
 
-def generate_summary_table(csv_path):
+def generate_summary_table(csv_filename, output_csv_name):
     """
-    Generates average and SD tables.
+    Generates average and SD tables and saves them as CSV.
     """
-    df = pd.read_csv(csv_path).dropna()
+    # Join the directory path with the filename
+    file_path = DATA_DIR / csv_filename
+    df = pd.read_csv(file_path).dropna()
     
     summary = df.groupby('n').agg({
         'MLE_Beta2': ['mean', 'std'],
         'Plugin_Delta': ['mean', 'std'],
         'ITT_Delta': ['mean', 'std'],
-        'True_Delta': 'mean' # Constant across reps for a given n[cite: 4]
+        'True_Delta': 'mean' 
     }).round(3)
+    
+    # Ensure directory exists and save the table
+    RAW_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    summary.to_csv(RAW_RESULTS_DIR / output_csv_name)
     
     return summary
 
-def plot_asymptotics(csv_path, output_name):
+def plot_asymptotics(csv_filename, output_name):
     """
-    Plots the convergence of the estimators as n increases.
+    Plots the convergence of the estimators as n increases and saves as PDF.
     """
-    df = pd.read_csv(csv_path).dropna()
+    # Join the directory path with the filename
+    file_path = DATA_DIR / csv_filename
+    df = pd.read_csv(file_path).dropna()
+    
     df_melted = df.melt(id_vars=['n', 'rep'], 
                         value_vars=['MLE_Beta2', 'Plugin_Delta', 'ITT_Delta', 'True_Delta'],
                         var_name='Estimator', value_name='Estimate')
@@ -45,17 +57,21 @@ def plot_asymptotics(csv_path, output_name):
     plt.legend(title="Method")
     plt.grid(axis='y', linestyle='--', alpha=0.6)
     plt.tight_layout()
-    plt.savefig(f"simulated/{output_name}.pdf", format='pdf', bbox_inches='tight')
+    
+    # Ensure directory exists and save the figure
+    FIG_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    output_file = FIG_RESULTS_DIR / f"{output_name}.pdf"
+    plt.savefig(output_file, format='pdf', bbox_inches='tight')
 
 if __name__ == "__main__":
     # Process the Freedman DGP
     freedman_csv = "sim_results_freedman.csv"
-    summary_f = generate_summary_table(freedman_csv)
+    summary_f = generate_summary_table(freedman_csv, "summary_freedman.csv")
     print("Freedman DGP Summary:\n", summary_f)
     plot_asymptotics(freedman_csv, "freedman_convergence")
     
     # Process the Nonlinear DGP
     nonlinear_csv = "sim_results_nonlinear.csv"
-    summary_nl = generate_summary_table(nonlinear_csv)
+    summary_nl = generate_summary_table(nonlinear_csv, "summary_nonlinear.csv")
     print("\nNonlinear DGP Summary:\n", summary_nl)
     plot_asymptotics(nonlinear_csv, "nonlinear_convergence")
