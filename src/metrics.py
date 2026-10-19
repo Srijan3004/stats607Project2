@@ -43,7 +43,7 @@ def plot_asymptotics(csv_filename, output_name):
     sns.boxplot(x='n', y='Estimate', hue='Estimator', data=df_melted, 
                 palette=['#e74c3c', '#2ecc71', '#3498db', '#2c3e50'], showfliers=False)
     
-    # Add true parameter lines
+    
     true_means = df.groupby('n')['True_Delta'].mean()
     for i, n in enumerate(sorted(df['n'].unique())):
         plt.hlines(true_means[n], i-0.4, i+0.4, color='black', linestyles='dashed', alpha=0.7)
