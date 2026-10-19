@@ -6,7 +6,7 @@ from dgps import generate_freedman_population, generate_nonlinear_population, ra
 from methods import calc_true_delta, estimate_effects
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-OUTPUT_DIR = PROJECT_ROOT / "data" / "simulated"
+OUTPUT_DIR = PROJECT_ROOT / "data" 
 
 def run_simulation(n_values=[100, 500, 1000, 5000], replicates=1000, dgp='freedman'):
     """
