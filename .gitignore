@@ -18,5 +18,3 @@ env/
 .DS_Store
 Thumbs.db
 
-# Project-specific generated data and figures
-data/simulated/
