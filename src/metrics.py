@@ -13,7 +13,6 @@ def generate_summary_table(csv_filename, output_csv_name):
     """
     Generates average and SD tables and saves them as CSV.
     """
-    # Join the directory path with the filename
     file_path = DATA_DIR / csv_filename
     df = pd.read_csv(file_path).dropna()
     
@@ -24,7 +23,6 @@ def generate_summary_table(csv_filename, output_csv_name):
         'True_Delta': 'mean' 
     }).round(3)
     
-    # Ensure directory exists and save the table
     RAW_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     summary.to_csv(RAW_RESULTS_DIR / output_csv_name)
     
@@ -34,7 +32,6 @@ def plot_asymptotics(csv_filename, output_name):
     """
     Plots the convergence of the estimators as n increases and saves as PDF.
     """
-    # Join the directory path with the filename
     file_path = DATA_DIR / csv_filename
     df = pd.read_csv(file_path).dropna()
     
@@ -58,7 +55,6 @@ def plot_asymptotics(csv_filename, output_name):
     plt.grid(axis='y', linestyle='--', alpha=0.6)
     plt.tight_layout()
     
-    # Ensure directory exists and save the figure
     FIG_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     output_file = FIG_RESULTS_DIR / f"{output_name}.pdf"
     plt.savefig(output_file, format='pdf', bbox_inches='tight')
