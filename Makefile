@@ -1,6 +1,5 @@
 .PHONY: all simulate metrics clean test
 
-# Ensure Python finds the modules in src/ for tests and scripts
 export PYTHONPATH := src:$(PYTHONPATH)
 
 all: simulate metrics
