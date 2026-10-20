@@ -12,22 +12,25 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
+SEED = 1234567891
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-OUTPUT_DIR = PROJECT_ROOT / "data" 
+RAW_DIR = PROJECT_ROOT / "data" 
 
 def run_simulation(n_values=[100, 500, 1000, 5000], replicates=1000, dgp='freedman'):
     """
     Executes the Monte Carlo loops and caches output.
     """
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
     results = []
+    
+    np.random.seed(SEED)
     
     logging.info(f"Starting simulation pipeline for DGP='{dgp}'. Total replicates per n: {replicates}.")
     
     for n in n_values:
         logging.info(f"Initializing population for n={n}...")
         
-        # Freeze potential outcomes for the population
         if dgp == 'freedman':
             Z, Y_C, Y_T = generate_freedman_population(n)
         else:
@@ -35,7 +38,6 @@ def run_simulation(n_values=[100, 500, 1000, 5000], replicates=1000, dgp='freedm
             
         true_delta = calc_true_delta(Y_C, Y_T)
         
-        # Wrap the replicates loop with tqdm for a progress bar
         for rep in tqdm(range(replicates), desc=f"DGP: {dgp} | n={n}", leave=False, unit="rep"):
             X, Y_obs = randomize_treatment(Y_C, Y_T, p_treat=0.75)
             beta_hat, plugin_delta, itt_delta = estimate_effects(X, Z, Y_obs)
@@ -50,7 +52,7 @@ def run_simulation(n_values=[100, 500, 1000, 5000], replicates=1000, dgp='freedm
             })
             
     df = pd.DataFrame(results)
-    output_file = OUTPUT_DIR / f"sim_results_{dgp}.csv"
+    output_file = RAW_DIR / f"sim_results_{dgp}.csv"
     df.to_csv(output_file, index=False)
     logging.info(f"Simulation complete for DGP='{dgp}'. Cached results to {output_file}\n")
     
