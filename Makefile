@@ -20,3 +20,5 @@ clean:
 	@echo "Cleaning simulated data cache..."
 	rm -rf data/simulated/*.csv
 	rm -rf data/simulated/*.pdf
+	rm -rf tests/__pycache__
+	rm -rf src/__pycache__
