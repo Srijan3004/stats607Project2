@@ -30,8 +30,7 @@ Note that the baseline model was proposed in Freedman and we extended the simila
   **ITT Estimator ($\hat{\Delta}$):** The simple empirical difference in log odds calculated directly from the observed success rates in the randomized treatment and control groups.
 
 ## Performance Measures
-      The empirical mean of the estimates across the 1,000 replicates is compared against the true finite-population parameter $\Delta$ (which is held constant for a given $n$) to assess bias and asymptotic consistency.
-      Also, the empirical standard deviation (SD) of the estimates is calculated across the 1,000 replicates to measure the variability and stability of each estimator.
+The empirical mean of the estimates across the 1,000 replicates is compared against the true finite-population parameter $\Delta$ (whicis held constant for a given $n$) to assess bias and asymptotic consistency. Also, the empirical standard deviation (SD) of the estimates is calculated across the 1,000 replicates to measure the variability and stability of each estimator.
 
 
 
