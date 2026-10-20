@@ -8,7 +8,7 @@ To contrast the MLE's performance against the proposed plug-in estimator and the
 Note that the baseline model was proposed in Freedman and we extended the similar simulation to a non linear model to see how it performs. 
 
 ## Data-Generating Mechanisms (DGM)
-*   **Shared Design:** For both DGMs, the finite study populations are of size $n \in \{100, 500, 1000, 5000\}$. Treatment assignment is purely stochastic and independent of potential outcomes, with each subject having a 75% probability of being assigned to treatment ($X_i \sim \text{Bernoulli}(0.75)$). 
+*   **Shared Design:** For both DGMs, the finite study populations are of size $n \in \{100, 500, 1000, 5000\}$. Treatment assignment is purely stochastic and independent of potential outcomes, with each subject having a 75% probability of being assigned to treatment ($X_i \sim \text{Ber} (0.75)$). 
            This assignment is randomized across 1,000 simulation replicates for each $n$.
 *   **Freedman DGP (Baseline Misspecification):** 
     *   Latent variables: $U_i, V_i \sim \text{Uniform}(0, 1)$.
@@ -30,8 +30,7 @@ Note that the baseline model was proposed in Freedman and we extended the simila
   **ITT Estimator ($\hat{\Delta}$):** The simple empirical difference in log odds calculated directly from the observed success rates in the randomized treatment and control groups.
 
 ## Performance Measures
-      The empirical mean of the estimates across the 1,000 replicates is compared against the true finite-population parameter $\Delta$ (which is held constant for a given $n$) to assess bias and asymptotic consistency.
-      Also, the empirical standard deviation (SD) of the estimates is calculated across the 1,000 replicates to measure the variability and stability of each estimator.
+The empirical mean of the estimates across the 1,000 replicates is compared against the true finite-population parameter $\Delta$ (whicis held constant for a given $n$) to assess bias and asymptotic consistency. Also, the empirical standard deviation (SD) of the estimates is calculated across the 1,000 replicates to measure the variability and stability of each estimator.
 
 
 
