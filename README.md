@@ -12,7 +12,7 @@ Intention-to-Treat (ITT) estimators under both baseline and severe non-linear co
 *   `results/`: Generated summary tables (`raw/`) and convergence plots (`figures/`).
 *   `ADEMP.md`: Rewriting the full scenario in ADEMP framework
 
-## Quick Start
+## At a glance
 
 Ensure you have Python 3 installed, then install the dependencies:
 
